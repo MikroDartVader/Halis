@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BotAI : MonoBehaviour
+public class SnakeHeadMove : MonoBehaviour
 {
 
 	public Transform target;
@@ -20,10 +20,13 @@ public class BotAI : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		/*GameObject go = GameObject.FindGameObjectWithTag ("Player");
-		target = go.transform;*/
+		GameObject go = GameObject.FindGameObjectWithTag ("Player");
+		target = go.transform;
+		moveSpeed = 1;
+		rotationSpeed = 10;
+		distance = 5;
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{
@@ -34,6 +37,6 @@ public class BotAI : MonoBehaviour
 
 		//Follow target
 		var heading = target.position - myTrasform.position;
-		myTrasform.position += myTrasform.forward * (heading.magnitude - distance) * Time.deltaTime* moveSpeed; 
+		myTrasform.position += myTrasform.forward * (heading.magnitude - distance) * Time.deltaTime * moveSpeed; 
 	}
 }
