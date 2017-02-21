@@ -53,7 +53,7 @@ public class SnakePartMove: MonoBehaviour
 			int.TryParse(s.ToCharArray()[i].ToString(), out tmp);
 			result += tmp * (int)Mathf.Pow(10, s.Length - (i + 1));
 		}
-		Debug.Log(result);
+		//Debug.Log(result);
 		return result;
 	}
 
@@ -76,7 +76,7 @@ public class SnakePartMove: MonoBehaviour
 			else if (hadStarted == true)
 				end = s.IndexOf(c) - 2;
 		}
-		Debug.Log(s.Substring(start, end));
+		//Debug.Log(s.Substring(start, end));
 		return s.Substring(start, end);
 	}
 }
