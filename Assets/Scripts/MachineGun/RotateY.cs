@@ -7,8 +7,10 @@ public class RotateY : MonoBehaviour
 
     public Transform target;
     public float rotationSpeed;
+    public float VisibleDistance,UnvisibleDistance;
 
     private Transform myTrasform;
+    private bool TargetDetected;
 
     void Awake()
     {
@@ -20,15 +22,21 @@ public class RotateY : MonoBehaviour
     {
         GameObject go = GameObject.FindGameObjectWithTag("Player");
         target = go.transform;
+        TargetDetected = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        //Debug.DrawLine(myTrasform.position, target.position, Color.blue);
+        if (TargetDetected == false && (target.position - myTrasform.position).magnitude <= VisibleDistance)
+            TargetDetected = true;
+        else if(TargetDetected==true && (target.position - myTrasform.position).magnitude > UnvisibleDistance)
+            TargetDetected = false;
         //look at target
-        Vector3 RotatateTo = new Vector3((target.position - myTrasform.position).x, 0, (target.position - myTrasform.position).z);
-        myTrasform.rotation = Quaternion.Slerp(myTrasform.rotation, Quaternion.LookRotation(RotatateTo), rotationSpeed * Time.deltaTime);
+        if (TargetDetected)
+        {
+            Vector3 RotatateTo = new Vector3((target.position - myTrasform.position).x, 0, (target.position - myTrasform.position).z);
+            myTrasform.rotation = Quaternion.Slerp(myTrasform.rotation, Quaternion.LookRotation(RotatateTo), rotationSpeed * Time.deltaTime);
+        }
     }
 }

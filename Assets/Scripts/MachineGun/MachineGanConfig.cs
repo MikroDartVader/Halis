@@ -5,6 +5,7 @@ using UnityEngine;
 public class MachineGanConfig : MonoBehaviour {
 
     public float RotateSpeedX,RotateSpeedY;
+    public float VisibleDistance,UnvisibleDistance;
 
 	// Use this for initialization
 	void Start () {
