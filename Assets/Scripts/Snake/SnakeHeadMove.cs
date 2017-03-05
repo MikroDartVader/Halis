@@ -22,9 +22,6 @@ public class SnakeHeadMove : MonoBehaviour
 	{
 		GameObject go = GameObject.FindGameObjectWithTag ("Player");
 		target = go.transform;
-		moveSpeed = 1;
-		rotationSpeed = 10;
-		distance = 5;
 	}
 
 	// Update is called once per frame

@@ -8,35 +8,27 @@ public class Shoot : MonoBehaviour
     public Transform Bullet;
     public Transform target;
     public float ShootingSpeed;
-    public int BulletSpeed;
-    public float VisibleDistance,UnvisibleDistance;
+    public float UnvisibleDistance;
+    public bool TargetDetected;
+    public float BulletSpeed, BulletDestroyTime;
 
-    private float ShootTimer, StartTime;    
-    private bool TargetDetected;
+    private float ShootTimer, StartTime;
+    private Transform go;
+    private RaycastHit[] hits;
 
-    // Use this for initialization
-    void Start()
-    {
-		
-        ShootingSpeed = 1 / ShootingSpeed; //from shoot/sec -> to sec/shoot
-    
-        GameObject go = GameObject.FindGameObjectWithTag("Player");
-        target = go.transform;
-        TargetDetected = false;
-    }
+
 	
     // Update is called once per frame
     void Update()
     {
-        if (TargetDetected == false && (target.position - transform.position).magnitude <= VisibleDistance)
-            TargetDetected = true;
-        else if(TargetDetected==true && (target.position - transform.position).magnitude > UnvisibleDistance)
-            TargetDetected = false;
-        
-        if (Time.realtimeSinceStartup - StartTime > ShootingSpeed && TargetDetected)
+        hits = Physics.RaycastAll(transform.position, target.position - transform.position, (target.position - transform.position).magnitude);
+        Debug.Log(hits[0].transform.name);
+        if (Time.realtimeSinceStartup - StartTime > ShootingSpeed && TargetDetected && hits[0].transform.Equals(target.transform))
         {
             StartTime = Time.realtimeSinceStartup;
-            Instantiate(Bullet, transform.position, transform.rotation);  
+            go = Instantiate(Bullet, transform.position, transform.rotation);
+            go.GetComponent<BulletFlying>().DestroyTime = BulletDestroyTime;
+            go.GetComponent<BulletFlying>().Speed = BulletSpeed;
         }
     }
 }

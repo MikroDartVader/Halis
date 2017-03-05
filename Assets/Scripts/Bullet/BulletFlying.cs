@@ -23,7 +23,7 @@ public class BulletFlying : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-         if (other.gameObject.name != "Gun")
-        Destroy(gameObject,0);
+        if (other.gameObject.name != "Gun" && other.gameObject.tag != "Bullet")
+            Destroy(gameObject);
     }
 }

@@ -8,9 +8,9 @@ public class RotateY : MonoBehaviour
     public Transform target;
     public float rotationSpeed;
     public float VisibleDistance,UnvisibleDistance;
+    public bool TargetDetected;
 
     private Transform myTrasform;
-    private bool TargetDetected;
 
     void Awake()
     {
@@ -20,18 +20,13 @@ public class RotateY : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        GameObject go = GameObject.FindGameObjectWithTag("Player");
-        target = go.transform;
         TargetDetected = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (TargetDetected == false && (target.position - myTrasform.position).magnitude <= VisibleDistance)
-            TargetDetected = true;
-        else if(TargetDetected==true && (target.position - myTrasform.position).magnitude > UnvisibleDistance)
-            TargetDetected = false;
+
         //look at target
         if (TargetDetected)
         {

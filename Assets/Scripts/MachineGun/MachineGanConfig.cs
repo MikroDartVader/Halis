@@ -2,18 +2,69 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MachineGanConfig : MonoBehaviour {
+public class MachineGanConfig : MonoBehaviour
+{
 
-    public float RotateSpeedX,RotateSpeedY;
-    public float VisibleDistance,UnvisibleDistance;
+    public Transform Bullet;
+    public Transform Target;
+    public GameObject Body, Gun, BulletSpawn;
+    public float RotateSpeed;
+    public float VisibleDistance, UnvisibleDistance;
+    public int ShootsPerSecond;
+    public float BulletSpeed, BulletDestroyTime;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    private bool TargetDetected,TargetCaptured;
+    private Shoot Shoot;
+    private RotateX X;
+    private RotateY Y;
+
+    // Use this for initialization
+    void Start()
+    {
+        Y = Body.GetComponent<RotateY>();
+        X = Gun.GetComponent<RotateX>();
+        Shoot = BulletSpawn.GetComponent<Shoot>();
+
+        X.rotationSpeed = RotateSpeed;
+        Y.rotationSpeed = RotateSpeed;
+
+        X.VisibleDistance = VisibleDistance;
+        Y.VisibleDistance = VisibleDistance;
+
+        X.UnvisibleDistance = UnvisibleDistance;
+        Y.UnvisibleDistance = UnvisibleDistance;
+        Shoot.UnvisibleDistance = UnvisibleDistance;
+
+        Shoot.Bullet = Bullet;
+
+        Shoot.ShootingSpeed = 1f / ShootsPerSecond;
+
+        X.target = Target;
+        Y.target = Target;
+        Shoot.target = Target;
+
+        Shoot.BulletDestroyTime = BulletDestroyTime;
+        Shoot.BulletSpeed = BulletSpeed;
+    }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    // Update is called once per frame
+    void Update()
+    {
+
+        if (TargetDetected == false && (Target.position - transform.position).magnitude <= VisibleDistance)
+        {
+            TargetDetected = true;
+            X.TargetDetected = TargetDetected;
+            Y.TargetDetected = TargetDetected;
+            Shoot.TargetDetected = TargetDetected;
+        }
+        else if (TargetDetected == true && (Target.position - transform.position).magnitude > UnvisibleDistance)
+        {
+            TargetDetected = false;
+            X.TargetDetected = TargetDetected;
+            Y.TargetDetected = TargetDetected;
+            Shoot.TargetDetected = TargetDetected;
+        }
+
+    }
 }
