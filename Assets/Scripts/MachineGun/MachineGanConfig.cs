@@ -10,7 +10,7 @@ public class MachineGanConfig : MonoBehaviour
     public GameObject Body, Gun, BulletSpawn;
     public float RotateSpeed;
     public float VisibleDistance, UnvisibleDistance;
-    public int ShootsPerSecond;
+    public float ShootsPerSecond;
     public float BulletSpeed, BulletDestroyTime;
 
     private bool TargetDetected,TargetCaptured;
