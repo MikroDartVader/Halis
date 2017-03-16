@@ -13,7 +13,7 @@ public class MachineGanConfig : MonoBehaviour
     public float ShootsPerSecond;
     public float BulletSpeed, BulletDestroyTime;
 
-    private bool TargetDetected,TargetCaptured;
+    public bool TargetDetected;
     private Shoot Shoot;
     private RotateX X;
     private RotateY Y;

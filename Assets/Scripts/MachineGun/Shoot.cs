@@ -22,13 +22,16 @@ public class Shoot : MonoBehaviour
     void Update()
     {
         hits = Physics.RaycastAll(transform.position, target.position - transform.position, (target.position - transform.position).magnitude);
-//        Debug.Log(hits[0].transform.name);
-        if (Time.realtimeSinceStartup - StartTime > ShootingSpeed && TargetDetected && hits[0].transform.Equals(target.transform))
+        //Debug.Log(hits[0].transform.name);
+        if (hits.Length!=0)
         {
-            StartTime = Time.realtimeSinceStartup;
-            go = Instantiate(Bullet, transform.position, transform.rotation);
-            go.GetComponent<BulletFlying>().DestroyTime = BulletDestroyTime;
-            go.GetComponent<BulletFlying>().Speed = BulletSpeed;
+            if (Time.time - StartTime > ShootingSpeed && TargetDetected && hits[0].transform.Equals(target.transform))
+            {
+                StartTime = Time.time;
+                go = Instantiate(Bullet, transform.position, transform.rotation);
+                go.GetComponent<BulletFlying>().DestroyTime = BulletDestroyTime;
+                go.GetComponent<BulletFlying>().Speed = BulletSpeed;
+            }
         }
     }
 }

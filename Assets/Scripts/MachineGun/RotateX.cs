@@ -26,7 +26,6 @@ public class RotateX : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawLine(myTrasform.position, target.position, Color.blue);
 
         //look at target
 
