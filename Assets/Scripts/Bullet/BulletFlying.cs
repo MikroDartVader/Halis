@@ -12,7 +12,7 @@ public class BulletFlying : MonoBehaviour
 
     void Start()
     {
-        Destroy(gameObject, DestroyTime);
+        //Destroy(gameObject, DestroyTime);
     }
 	
     // Update is called once per frame

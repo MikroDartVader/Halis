@@ -27,6 +27,8 @@ public class Grab : MonoBehaviour
                         grOb.SetParent(transform);
                         grOb.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                         grOb.GetComponent<Collider>().enabled = false;
+                        if (grOb.name == "bulletPrefab" || grOb.name == "bulletPrefab(Clone)")
+                            grOb.GetComponent<BulletFlying>().enabled = false;
                         grOb.rotation = transform.rotation;
                         grOb.Rotate(-90, 0, 0);
                         grOb.position = transform.position;
