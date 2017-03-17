@@ -6,43 +6,62 @@ public class Grab : MonoBehaviour
 {
 
 
+    public int GrabButton, DropButton, OperationButton;
+    public Texture aim;
+
+
+    private bool grabbed = false, captured = false;
     private RaycastHit[] hits;
-    public bool grabbed = false;
-    private Transform grOb;
+    private Act OperObjAct;
 	
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (!grabbed)
         {
-            if (!grabbed)
+            hits = Physics.RaycastAll(transform.parent.position, transform.parent.forward, 5);
+            if (hits.Length != 0)
+                Debug.Log(hits[hits.Length - 1].transform.name);
+            if (hits.Length != 0 && hits[hits.Length - 1].transform.tag == "Operateble")
             {
-                hits = Physics.RaycastAll(transform.parent.position, transform.parent.forward, 5);
-                if (hits.Length != 0)
+                captured = true;
+                OperObjAct = hits[hits.Length - 1].transform.GetComponent<Act>();
+
+                if (Input.GetMouseButtonDown(GrabButton) && OperObjAct.Grabable)
                 {
-                   // Debug.Log(hits[hits.Length - 1].transform.name);
-                    grOb = hits[hits.Length - 1].transform;
-                    if (grOb.tag == "Grabable")
-                    {
-                        grOb.SetParent(transform);
-                        grOb.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                        grOb.GetComponent<Collider>().enabled = false;
-                        if (grOb.name == "bulletPrefab" || grOb.name == "bulletPrefab(Clone)")
-                            grOb.GetComponent<BulletFlying>().enabled = false;
-                        grOb.rotation = transform.rotation;
-                        grOb.Rotate(-90, 0, 0);
-                        grOb.position = transform.position;
-                        grabbed = true;
-                    }
+                    OperObjAct.Grab();
+                    grabbed = true;
                 }
+                else if (Input.GetMouseButtonDown(OperationButton))
+                    OperObjAct.Operate();
             }
-            else if (grOb != null)
+            else
+                captured = false;
+        }
+        else
+        {
+            captured = false;
+
+            if (Input.GetMouseButtonDown(DropButton))
             {
-                grOb.parent = null;
-                grOb.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-                grOb.GetComponent<Collider>().enabled = true;
+                OperObjAct.Drop();
                 grabbed = false;
             }
+            else if (Input.GetMouseButtonDown(OperationButton))
+                OperObjAct.Operate();
         }
+                        
+    }
+
+
+    void OnGUI()
+    {
+        float size;
+        if (!captured)
+            size = 0.4f;
+        else
+            size = 0.3f;
+        GUI.DrawTexture(new Rect((Screen.width - aim.width * size) / 2, (Screen.height - aim.height * size) / 2, aim.width * size, aim.height * size), aim);
+
     }
 }

@@ -8,7 +8,7 @@ TagManager:
   - Gun
   - Head
   - Bullet
-  - Grabable
+  - Operateble
   layers:
   - Default
   - TransparentFX
