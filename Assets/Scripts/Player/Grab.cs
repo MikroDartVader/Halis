@@ -12,6 +12,7 @@ public class Grab : MonoBehaviour
 
     private bool grabbed = false, captured = false;
     private RaycastHit[] hits;
+    private GameObject OperObj;
     private Act OperObjAct;
 	
     // Update is called once per frame
@@ -21,7 +22,7 @@ public class Grab : MonoBehaviour
         {
             hits = Physics.RaycastAll(transform.parent.position, transform.parent.forward, 5);
             if (hits.Length != 0)
-                Debug.Log(hits[hits.Length - 1].transform.name);
+                Debug.Log(hits[0].transform.name);
             if (hits.Length != 0 && hits[hits.Length - 1].transform.tag == "Operateble")
             {
                 captured = true;
