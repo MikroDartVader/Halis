@@ -29,6 +29,7 @@ public abstract class Act : MonoBehaviour
         {
             transform.parent = null;
             transform.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            transform.GetComponent<Rigidbody>().AddForce(new Vector3(1,0,0));
             transform.GetComponent<Collider>().enabled = true;
             grabbed = true;
         }

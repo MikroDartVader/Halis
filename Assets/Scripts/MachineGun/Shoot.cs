@@ -29,7 +29,7 @@ public class Shoot : MonoBehaviour
             {
                 StartTime = Time.time;
                 go = Instantiate(Bullet, transform.position, transform.rotation);
-                go.GetComponent<BulletFlying>().DestroyTime = BulletDestroyTime;
+                go.GetComponent<BulletFlying>().Gun = transform.parent;
                 go.GetComponent<BulletFlying>().Speed = BulletSpeed;
             }
         }

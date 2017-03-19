@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class BulletFlying : MonoBehaviour
 {
-    public float Speed, DestroyTime;
-    // Use this for initialization
-    void Awake()
-    {
-    }
+    public float Speed;
+    public int damage;
+    public Transform Gun;
 
     void Start()
     {
@@ -18,12 +16,19 @@ public class BulletFlying : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += Speed * Time.deltaTime * transform.forward;
+        transform.position += Speed * Time.deltaTime * transform.right;
     }
 
     void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.name != "Gun" && other.gameObject.tag != "Bullet")
+        if (other.transform != Gun)
+        {
             Destroy(gameObject);
+            if (other.gameObject.GetComponent<HealthCounter>() != null)
+                other.gameObject.GetComponent<HealthCounter>().damage(damage);
+
+            if (other.gameObject.transform.parent!=null && other.gameObject.transform.parent.GetComponent<HealthCounter>() != null)
+                other.gameObject.transform.parent.GetComponent<HealthCounter>().damage(damage);
+        }
     }
 }

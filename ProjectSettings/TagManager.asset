@@ -6,9 +6,6 @@ TagManager:
   tags:
   - bot
   - Gun
-  - Head
-  - Bullet
-  - Operateble
   layers:
   - Default
   - TransparentFX
