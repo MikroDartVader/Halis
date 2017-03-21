@@ -12,46 +12,62 @@ public class Operating : MonoBehaviour
 
     private bool grabbed = false, captured = false;
     private RaycastHit[] hits;
-    private GameObject OperObj;
-    private Act OperObjAct;
+    private Transform OperObj, GrabbedObj;
+    private Act GrabbedObjAct;
 	
     // Update is called once per frame
     void Update()
     {
-        if (!grabbed)
+        hits = Physics.RaycastAll(transform.parent.position, transform.parent.forward, 5);
+        if (hits.Length != 0)
         {
-            hits = Physics.RaycastAll(transform.parent.position, transform.parent.forward, 5);
-            if (hits.Length != 0)
-                Debug.Log(hits[0].transform.name);
-            if (hits.Length != 0 && hits[hits.Length - 1].transform.tag == "Operateble")
+            OperObj = hits[hits.Length - 1].transform;
+        
+            if (!grabbed)
             {
-                captured = true;
-                OperObjAct = hits[hits.Length - 1].transform.GetComponent<Act>();
-
-                if (Input.GetMouseButtonDown(GrabButton) && OperObjAct.Grabable)
+                if (OperObj.tag == "Operateble" && OperObj.GetComponent<Act>() != null)
                 {
-                    OperObjAct.Grab();
-                    grabbed = true;
+                    captured = true;
+                    GrabbedObjAct = OperObj.GetComponent<Act>();
+
+                    if (Input.GetMouseButtonDown(GrabButton) && GrabbedObjAct.Grabable)
+                    {
+                        GrabbedObjAct.Grab();
+                        grabbed = true;
+                        GrabbedObj = OperObj;
+                    }
+                    else if (Input.GetMouseButtonDown(OperationButton))
+                        GrabbedObjAct.Operate();
                 }
-                else if (Input.GetMouseButtonDown(OperationButton))
-                    OperObjAct.Operate();
+                else
+                    captured = false;
             }
             else
-                captured = false;
-        }
-        else
-        {
-            captured = false;
-
-            if (Input.GetMouseButtonDown(DropButton))
             {
-                OperObjAct.Drop();
-                grabbed = false;
+                if (OperObj.tag == "Operateble" && OperObj.GetComponent<BaseToPut>() != null && OperObj.GetComponent<BaseToPut>().PutableObject == GrabbedObj)
+                {
+                    captured = true;
+                    if (Input.GetMouseButtonDown(OperationButton))
+                    {
+                        GrabbedObj.GetComponent<Act>().Put(OperObj);
+                        grabbed = false;
+                        captured = false;
+                    }
+                }
+                else
+                {
+                    captured = false;
+
+                    if (Input.GetMouseButtonDown(DropButton))
+                    {
+                        GrabbedObjAct.Drop();
+                        grabbed = false;
+                    }
+                    else if (Input.GetMouseButtonDown(OperationButton))
+                        GrabbedObjAct.Operate();
+                }
             }
-            else if (Input.GetMouseButtonDown(OperationButton))
-                OperObjAct.Operate();
-        }
-                        
+        }         
     }
 
 

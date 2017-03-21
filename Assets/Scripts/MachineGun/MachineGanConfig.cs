@@ -21,6 +21,9 @@ public class MachineGanConfig : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        if (Target == null)
+            Target = GameObject.FindGameObjectWithTag("Player").transform;
+
         Y = Body.GetComponent<RotateY>();
         X = Gun.GetComponent<RotateX>();
         Shoot = BulletSpawn.GetComponent<Shoot>();

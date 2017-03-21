@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class BulletFlying : MonoBehaviour
 {
-    public float Speed;
+    public float Speed,DestroyTime;
     public int damage;
     public Transform Gun;
 
+
     void Start()
     {
-        //Destroy(gameObject, DestroyTime);
+        Destroy(gameObject, DestroyTime);
     }
 	
     // Update is called once per frame
