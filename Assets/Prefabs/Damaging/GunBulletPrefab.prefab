@@ -20,10 +20,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4202290464003632}
   - component: {fileID: 33998177747032646}
-  - component: {fileID: 135087928834139270}
   - component: {fileID: 23260638357423038}
   - component: {fileID: 114546400624059490}
   - component: {fileID: 54602333127981338}
+  - component: {fileID: 136482785092422002}
   m_Layer: 0
   m_Name: GunBulletPrefab
   m_TagString: Bullet
@@ -55,7 +55,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1359117861689372}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 205.62231, y: 0.003999881, z: 37.390747}
+  m_LocalPosition: {x: 15.379051, y: 0.20800002, z: 12.339169}
   m_LocalScale: {x: 0.02, y: 0.016, z: 0.02}
   m_Children:
   - {fileID: 4788832201316824}
@@ -164,7 +164,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &114546400624059490
 MonoBehaviour:
@@ -178,17 +178,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 0
+  DestroyTime: 10
   damage: 25
   Gun: {fileID: 0}
---- !u!135 &135087928834139270
-SphereCollider:
+--- !u!136 &136482785092422002
+CapsuleCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1359117861689372}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: c698c7955ce174548948b06e57a9eb65, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
   m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Height: 2.5
+  m_Direction: 0
+  m_Center: {x: -0.8, y: 0, z: 0}

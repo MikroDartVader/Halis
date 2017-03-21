@@ -22,52 +22,68 @@ public class Operating : MonoBehaviour
         if (hits.Length != 0)
         {
             OperObj = hits[hits.Length - 1].transform;
-        
-            if (!grabbed)
+        }
+        else
+            OperObj = null;
+        if (!grabbed)
+        {
+            if (OperObj != null && OperObj.tag == "Operateble" && OperObj.GetComponent<Act>() != null)
             {
-                if (OperObj.tag == "Operateble" && OperObj.GetComponent<Act>() != null)
-                {
-                    captured = true;
-                    GrabbedObjAct = OperObj.GetComponent<Act>();
+                captured = true;
+                GrabbedObjAct = OperObj.GetComponent<Act>();
 
-                    if (Input.GetMouseButtonDown(GrabButton) && GrabbedObjAct.Grabable)
-                    {
-                        GrabbedObjAct.Grab();
-                        grabbed = true;
-                        GrabbedObj = OperObj;
-                    }
-                    else if (Input.GetMouseButtonDown(OperationButton))
-                        GrabbedObjAct.Operate();
+                if (Input.GetMouseButtonDown(GrabButton) && GrabbedObjAct.Grabable)
+                {
+                    GrabbedObjAct.Grab();
+                    grabbed = true;
+                    GrabbedObj = OperObj;
+
+                    GrabbedObj.gameObject.layer = 8;
+                    for (int i = 0; i < GrabbedObj.childCount; i++)
+                        GrabbedObj.GetChild(i).gameObject.layer = GrabbedObj.gameObject.layer;
                 }
-                else
+                else if (Input.GetMouseButtonDown(OperationButton))
+                    GrabbedObjAct.Operate();
+            }
+            else
+                captured = false;
+        }
+        else
+        {
+            if (OperObj != null && OperObj.tag == "Operateble" && OperObj.GetComponent<BaseToPut>() != null && OperObj.GetComponent<BaseToPut>().PutableObject == GrabbedObj)
+            {
+                captured = true;
+                if (Input.GetMouseButtonDown(OperationButton))
+                {
+                    GrabbedObj.GetComponent<Act>().Put(OperObj);
+
+                    GrabbedObj.gameObject.layer = 0;
+                    for (int i = 0; i < GrabbedObj.childCount; i++)
+                        GrabbedObj.GetChild(i).gameObject.layer = GrabbedObj.gameObject.layer;
+                    
+                    grabbed = false;
                     captured = false;
+                }
             }
             else
             {
-                if (OperObj.tag == "Operateble" && OperObj.GetComponent<BaseToPut>() != null && OperObj.GetComponent<BaseToPut>().PutableObject == GrabbedObj)
-                {
-                    captured = true;
-                    if (Input.GetMouseButtonDown(OperationButton))
-                    {
-                        GrabbedObj.GetComponent<Act>().Put(OperObj);
-                        grabbed = false;
-                        captured = false;
-                    }
-                }
-                else
-                {
-                    captured = false;
+                captured = false;
 
-                    if (Input.GetMouseButtonDown(DropButton))
-                    {
-                        GrabbedObjAct.Drop();
-                        grabbed = false;
-                    }
-                    else if (Input.GetMouseButtonDown(OperationButton))
-                        GrabbedObjAct.Operate();
+                if (Input.GetMouseButtonDown(DropButton))
+                {
+                    GrabbedObjAct.Drop();
+
+                    GrabbedObj.gameObject.layer = 0;
+                    for (int i = 0; i < GrabbedObj.childCount; i++)
+                        GrabbedObj.GetChild(i).gameObject.layer = GrabbedObj.gameObject.layer;
+                    
+                    grabbed = false;
                 }
+                else if (Input.GetMouseButtonDown(OperationButton))
+                    GrabbedObjAct.Operate();
             }
-        }         
+        }
+               
     }
 
 

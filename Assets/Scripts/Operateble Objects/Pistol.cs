@@ -18,6 +18,7 @@ public class Pistol : Act
 
     public override void Operate()
     {
+        Debug.Log("shoot");
         if (grabbed)
         {
             go = Instantiate(BulletPrefab, BulletSpawn.transform.position, BulletSpawn.transform.rotation);
