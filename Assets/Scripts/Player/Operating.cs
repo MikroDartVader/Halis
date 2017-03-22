@@ -22,13 +22,13 @@ public class Operating : MonoBehaviour
         if (hits.Length != 0)
         {
             OperObj = hits[hits.Length - 1].transform;
-            Debug.Log(OperObj.name);
+            //Debug.Log(OperObj.name);
         }
         else
             OperObj = null;
         if (!grabbed)
         {
-            if (OperObj != null && OperObj.tag == "Operateble" && OperObj.GetComponent<Act>() != null)
+            if (OperObj != null && OperObj.GetComponent<Act>() != null)
             {
                 captured = true;
                 GrabbedObjAct = OperObj.GetComponent<Act>();
@@ -51,12 +51,15 @@ public class Operating : MonoBehaviour
         }
         else
         {
-            if (OperObj != null && OperObj.tag == "Operateble" && OperObj.GetComponent<BaseToPut>() != null && OperObj.GetComponent<BaseToPut>().PutableObject == GrabbedObj)
+            if (OperObj != null && (OperObj.GetComponent<BaseToPut>() != null && OperObj.GetComponent<BaseToPut>().PutableObject == GrabbedObj || OperObj.parent != null && OperObj.parent.GetComponent<BaseToPut>() != null && OperObj.parent.GetComponent<BaseToPut>().PutableObject == GrabbedObj))
             {
                 captured = true;
                 if (Input.GetMouseButtonDown(OperationButton))
                 {
-                    GrabbedObj.GetComponent<Act>().Put(OperObj);
+                    if (OperObj.GetComponent<BaseToPut>() != null)
+                        GrabbedObj.GetComponent<Act>().Put(OperObj);
+                    else
+                        GrabbedObj.GetComponent<Act>().Put(OperObj.parent);
 
                     GrabbedObj.gameObject.layer = 0;
                     for (int i = 0; i < GrabbedObj.childCount; i++)
@@ -72,8 +75,7 @@ public class Operating : MonoBehaviour
 
                 if (Input.GetMouseButtonDown(DropButton))
                 {
-                    GrabbedObjAct.Drop();
-
+                    GrabbedObjAct.Drop(gameObject.GetComponent<Rigidbody>().velocity,gameObject.GetComponent<Rigidbody>().angularVelocity);
                     GrabbedObj.gameObject.layer = 0;
                     for (int i = 0; i < GrabbedObj.childCount; i++)
                         GrabbedObj.GetChild(i).gameObject.layer = GrabbedObj.gameObject.layer;

@@ -22,7 +22,7 @@ public class BulletFlying : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        Debug.Log(other.transform.tag);
+        //Debug.Log(other.transform.tag);
         if (other.transform != Gun)
         {
             if (other.transform.tag == "Player" || other.transform.tag == "bot" || other.transform.parent != null && (other.transform.parent.tag == "Player" || other.transform.parent.tag == "bot"))

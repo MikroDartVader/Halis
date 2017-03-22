@@ -30,12 +30,14 @@ public abstract class Act : MonoBehaviour
     }
 
 
-    public void Drop()
+    public void Drop(Vector3 Vel, Vector3 AngVel)
     {
         if (Grabable)
         {
             transform.parent = null;
             transform.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            transform.GetComponent<Rigidbody>().velocity = Vel;
+            transform.GetComponent<Rigidbody>().angularVelocity = AngVel;
 
 
 
@@ -75,7 +77,7 @@ public abstract class Act : MonoBehaviour
 
     public virtual void Operate()
     {
-        Debug.Log("Operate");
+        //Debug.Log("Operate");
         if (Grabable)
         {
             if (grabbed)

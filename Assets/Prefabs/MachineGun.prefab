@@ -309,8 +309,8 @@ MonoBehaviour:
   Gun: {fileID: 1517786269178022}
   BulletSpawn: {fileID: 1922888676263080}
   RotateSpeed: 3
-  VisibleDistance: 20
-  UnvisibleDistance: 40
+  VisibleDistance: 10
+  UnvisibleDistance: 20
   ShootsPerSecond: 10
   BulletSpeed: 40
   BulletDestroyTime: 10
@@ -326,7 +326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4432907920c27cb4a88fc6f0d07756ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 100
+  Health: 200
 --- !u!135 &135181146905368478
 SphereCollider:
   m_ObjectHideFlags: 1
