@@ -5,7 +5,7 @@ using UnityEngine;
 public class Operating : MonoBehaviour
 {
 
-
+    public float HandLength;
     public int GrabButton, DropButton, OperationButton;
     public Texture aim;
 
@@ -18,10 +18,11 @@ public class Operating : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        hits = Physics.RaycastAll(transform.parent.position, transform.parent.forward, 5);
+        hits = Physics.RaycastAll(transform.parent.position, transform.parent.forward, HandLength);
         if (hits.Length != 0)
         {
             OperObj = hits[hits.Length - 1].transform;
+            Debug.Log(OperObj.name);
         }
         else
             OperObj = null;
